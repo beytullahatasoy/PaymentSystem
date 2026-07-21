@@ -13,7 +13,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<PaymentDbContext>(veritabaiAyarlari =>
 {
     veritabaiAyarlari.UseSqlServer(
-        builder.Configuration.GetConnectionString("PaymentSystemBaglantisi"));
+        builder.Configuration.GetConnectionString("PaymentSystemDbBaglantisi"));
 });
 //
 
