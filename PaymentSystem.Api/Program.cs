@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PaymentSystem.Api.Data;
+using PaymentSystem.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

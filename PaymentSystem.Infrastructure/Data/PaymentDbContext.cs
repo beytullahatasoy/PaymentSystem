@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PaymentSystem.Domain.Entities;
 
-namespace PaymentSystem.Api.Data;
+namespace PaymentSystem.Infrastructure.Data;
 
 public class PaymentDbContext : DbContext
 {

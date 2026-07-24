@@ -1,4 +1,4 @@
-﻿namespace PaymentSystem.Api.Dtos;
+﻿namespace PaymentSystem.Application.Dtos.Customers;
 
 public class CustomerResponseDto
 {
