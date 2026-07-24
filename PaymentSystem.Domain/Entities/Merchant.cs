@@ -1,4 +1,4 @@
-﻿namespace PaymentSystem.Api.Models;
+﻿namespace PaymentSystem.Domain.Entities;
 
 public class Merchant
 {

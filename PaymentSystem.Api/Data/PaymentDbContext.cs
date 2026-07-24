@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PaymentSystem.Api.Models;
+using PaymentSystem.Domain.Entities;
 
 namespace PaymentSystem.Api.Data;
 
