@@ -1,6 +1,10 @@
 @PaymentSystem.Api_HostAddress = http://localhost:5277
 
-GET {{PaymentSystem.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{PaymentSystem.Api_HostAddress}}/api/customers
+Content-Type: application/json
 
-###
+{
+  "firstName": "Beytullah",
+  "lastName": "Atasoy",
+  "email": "yanlis-mail"
+}
