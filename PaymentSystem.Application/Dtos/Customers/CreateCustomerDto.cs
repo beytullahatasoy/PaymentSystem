@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations; // Required gibi sınıflar için gerekli olan namespace
-                                             
-namespace PaymentSystem.Api.Dtos;
+
+namespace PaymentSystem.Application.Dtos.Customers;
 
 public class CreateCustomerDto  // Kullanıcı yalnızca izin verdiğimiz alanları gönderebilsin diye olusturulmus DTO sınıfı
 {
