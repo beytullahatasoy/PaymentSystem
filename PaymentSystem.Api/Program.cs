@@ -1,6 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using PaymentSystem.Infrastructure.Data;
 
+using PaymentSystem.Application.Interfaces.Repositories;
+using PaymentSystem.Infrastructure.Repositories;
+using PaymentSystem.Application.Interfaces.Services;
+using PaymentSystem.Application.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +20,10 @@ builder.Services.AddDbContext<PaymentDbContext>(veritabaiAyarlari =>
     veritabaiAyarlari.UseSqlServer(
         builder.Configuration.GetConnectionString("PaymentSystemDbBaglantisi"));
 });
+
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 //
 
 var app = builder.Build();
