@@ -1,13 +1,10 @@
-﻿using.PaymentSystem.Application.Dtos.Customers;
-using PaymentSystem.Domain.Entities;
+﻿using PaymentSystem.Domain.Entities;
 
 namespace PaymentSystem.Application.Interfaces.Repositories;
 
-internal interface ICustomerRepository
+public interface ICustomerRepository
 {
-    Task<bool> EmailExistAsync(string email);
-
-    Task AddAsync(Customer customer);
-
-    Task SaveChangesAsync();
+    Task<bool> EmailExistAsync(string email); // email kayıtlı mı?
+    Task AddAsync(Customer customer); // Yeni müşteriyi ekle
+    Task SaveChangesAsync(); // Değişiklikleri kaydet
 }
