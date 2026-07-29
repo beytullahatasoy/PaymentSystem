@@ -1,7 +1,6 @@
 # PaymentSystem
 
-ASP.NET Core, EF Core ve SQL Server kullanılarak geliştirilen
-katmanlı ödeme sistemi simülasyonudur.
+An educational layered payment system simulation developed using ASP.NET Core, EF Core, and SQL Server.
 
 ## Architecture
 
