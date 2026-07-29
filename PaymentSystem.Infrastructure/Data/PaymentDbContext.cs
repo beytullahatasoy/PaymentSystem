@@ -6,9 +6,9 @@ namespace PaymentSystem.Infrastructure.Data;
 public class PaymentDbContext : DbContext
 {
     public PaymentDbContext(
-        DbContextOptions<PaymentDbContext> veritabaniAyarlari)
-        : base(veritabaniAyarlari)
-    { 
+        DbContextOptions<PaymentDbContext> options)
+        : base(options)
+    {
     }
 
     public DbSet<Customer> Customers { get; set; } = null!;
@@ -17,28 +17,48 @@ public class PaymentDbContext : DbContext
     public DbSet<Merchant> Merchants { get; set; } = null!;
     public DbSet<PaymentTransaction> PaymentTransactions { get; set; } = null!;
 
-    protected override void OnModelCreating(ModelBuilder modelOlusturucu)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelOlusturucu);
+        base.OnModelCreating(modelBuilder);
 
-        modelOlusturucu.Entity<BankAccount>()
-            .HasOne(hesap => hesap.Customer)
-            .WithMany(musteri => musteri.BankAccounts)
-            .HasForeignKey(hesap => hesap.CustomerId);
-        
-        modelOlusturucu.Entity<Card>()
-            .HasOne(kart => kart.BankAccount)
-            .WithMany(hesap => hesap.Cards)
-            .HasForeignKey(kart => kart.BankAccountId);
+        modelBuilder.Entity<BankAccount>()
+            .HasOne(account => account.Customer)
+            .WithMany(customer => customer.BankAccounts)
+            .HasForeignKey(account => account.CustomerId);
 
-        modelOlusturucu.Entity<PaymentTransaction>()
-            .HasOne(islem => islem.Card)
-            .WithMany(kart => kart.PaymentTransactions)
-            .HasForeignKey(islem => islem.CardId);
+        modelBuilder.Entity<Card>()
+            .HasOne(card => card.BankAccount)
+            .WithMany(account => account.Cards)
+            .HasForeignKey(card => card.BankAccountId);
 
-        modelOlusturucu.Entity<PaymentTransaction>()
-            .HasOne(islem => islem.Merchant)
-            .WithMany(isYeri => isYeri.PaymentTransactions)
-            .HasForeignKey(islem => islem.MerchantId);
+        modelBuilder.Entity<PaymentTransaction>()
+            .HasOne(transaction => transaction.Card)
+            .WithMany(card => card.PaymentTransactions)
+            .HasForeignKey(transaction => transaction.CardId);
+
+        modelBuilder.Entity<PaymentTransaction>()
+            .HasOne(transaction => transaction.Merchant)
+            .WithMany(merchant => merchant.PaymentTransactions)
+            .HasForeignKey(transaction => transaction.MerchantId);
+
+        modelBuilder.Entity<Customer>()
+            .HasIndex(customer => customer.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<BankAccount>()
+            .HasIndex(account => account.AccountNumber)
+            .IsUnique();
+
+        modelBuilder.Entity<Card>()
+            .HasIndex(card => card.CardToken)
+            .IsUnique();
+
+        modelBuilder.Entity<Merchant>()
+            .HasIndex(merchant => merchant.MerchantCode)
+            .IsUnique();
+
+        modelBuilder.Entity<PaymentTransaction>()
+            .HasIndex(transaction => transaction.TransactionReference)
+            .IsUnique();
     }
 }

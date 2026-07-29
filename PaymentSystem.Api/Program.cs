@@ -8,17 +8,14 @@ using PaymentSystem.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-//
-builder.Services.AddDbContext<PaymentDbContext>(veritabaiAyarlari =>
+builder.Services.AddDbContext<PaymentDbContext>(options =>
 {
-    veritabaiAyarlari.UseSqlServer(
-        builder.Configuration.GetConnectionString("PaymentSystemDbBaglantisi"));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString(
+            "PaymentSystemDbBaglantisi"));
 });
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
@@ -35,11 +32,9 @@ builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
 
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IPaymentTransactionRepository,PaymentTransactionRepository>();
-//
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
