@@ -1,4 +1,4 @@
-﻿namespace PaymentSystem.Application.Dtos.Payment;
+﻿namespace PaymentSystem.Application.Dtos.Payments;
 
 public class PaymentResponseDto
 {

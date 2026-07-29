@@ -1,5 +1,4 @@
-﻿using PaymentSystem.Application.Dtos.Payment;
-using PaymentSystem.Application.Dtos.Payments;
+﻿using PaymentSystem.Application.Dtos.Payments;
 
 namespace PaymentSystem.Application.Interfaces.Services;
 

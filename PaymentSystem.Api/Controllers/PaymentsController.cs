@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PaymentSystem.Application.Dtos.Payment;
 using PaymentSystem.Application.Dtos.Payments;
 using PaymentSystem.Application.Interfaces.Services;
 

@@ -15,7 +15,7 @@ builder.Services.AddDbContext<PaymentDbContext>(options =>
 {
     options.UseSqlServer(
         builder.Configuration.GetConnectionString(
-            "PaymentSystemDbBaglantisi"));
+            "PaymentSystemDbConnection"));
 });
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
@@ -31,7 +31,7 @@ builder.Services.AddScoped<IMerchantService, MerchantService>();
 builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
 
 builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddScoped<IPaymentTransactionRepository,PaymentTransactionRepository>();
+builder.Services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
 
 var app = builder.Build();
 
