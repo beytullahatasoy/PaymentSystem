@@ -1,9 +1,11 @@
 @PaymentSystem.Api_HostAddress = http://localhost:5277
 
-POST {{PaymentSystem.Api_HostAddress}}/api/merchants
+POST {{PaymentSystem.Api_HostAddress}}/api/payments
 Content-Type: application/json
 
 {
-  "merchantName": "Test Market",
-  "merchantCategoryCode": "5411"
+  "cardToken": "CARD-5F92D42A89B141A2ACD75F34C3E64F18",
+  "merchantCode": "MER-20260729-8D3CFDFA",
+  "amountMinor": 100000,
+  "currency": "TRY"
 }

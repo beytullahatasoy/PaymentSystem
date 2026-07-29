@@ -6,4 +6,7 @@ public interface IBankAccountService
 {
     Task<BankAccountResponseDto> CreateBankAccountAsync
         (CreateBankAccountDto request);
+    Task<BankAccountResponseDto> DepositAsync(
+    int bankAccountId,
+    DepositBankAccountDto request);
 }

@@ -32,6 +32,9 @@ builder.Services.AddScoped<ICardRepository, CardRepository>();
 
 builder.Services.AddScoped<IMerchantService, MerchantService>();
 builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
+
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IPaymentTransactionRepository,PaymentTransactionRepository>();
 //
 
 var app = builder.Build();

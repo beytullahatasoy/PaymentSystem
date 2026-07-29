@@ -21,6 +21,14 @@ public class CardRepository : ICardRepository
             .AnyAsync(card => card.CardToken == cardToken);
     }
 
+    public async Task<Card?> GetByTokenAsync(string cardToken)
+    {
+        return await _dbContext.Cards
+            .Include(card => card.BankAccount)
+            .FirstOrDefaultAsync(card =>
+                card.CardToken == cardToken);
+    }
+
     public async Task AddAsync(Card card)
     {
         await _dbContext.Cards.AddAsync(card);

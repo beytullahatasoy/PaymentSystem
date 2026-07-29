@@ -22,6 +22,13 @@ public class MerchantRepository : IMerchantRepository
                 merchant.MerchantCode == merchantCode);
     }
 
+    public async Task<Merchant?> GetByCodeAsync(string merchantCode)
+    {
+        return await _dbContext.Merchants
+            .FirstOrDefaultAsync(merchant =>
+                merchant.MerchantCode == merchantCode);
+    }
+
     public async Task AddAsync(Merchant merchant)
     {
         await _dbContext.Merchants.AddAsync(merchant);

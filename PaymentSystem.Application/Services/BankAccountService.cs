@@ -73,6 +73,47 @@ public class BankAccountService : IBankAccountService
         return response;
     }
 
+    public async Task<BankAccountResponseDto> DepositAsync(
+    int bankAccountId,
+    DepositBankAccountDto request)
+    {
+        BankAccount? bankAccount =
+            await _bankAccountRepository.GetByIdAsync(bankAccountId);
+
+        if (bankAccount is null)
+        {
+            throw new KeyNotFoundException(
+                "Banka hesabı bulunamadı.");
+        }
+
+        if (bankAccount.Status != "Active")
+        {
+            throw new InvalidOperationException(
+                "Aktif olmayan banka hesabına bakiye eklenemez.");
+        }
+
+        if (request.AmountMinor <= 0)
+        {
+            throw new ArgumentException(
+                "Yatırılacak tutar sıfırdan büyük olmalıdır.");
+        }
+
+        bankAccount.BalanceMinor += request.AmountMinor;
+
+        await _bankAccountRepository.SaveChangesAsync();
+
+        return new BankAccountResponseDto
+        {
+            BankAccountId = bankAccount.BankAccountId,
+            CustomerId = bankAccount.CustomerId,
+            AccountNumber = bankAccount.AccountNumber,
+            BalanceMinor = bankAccount.BalanceMinor,
+            Currency = bankAccount.Currency,
+            Status = bankAccount.Status,
+            CreatedAt = bankAccount.CreatedAt
+        };
+    }
+
     private async Task<string> GenerateUniqueAccountNumberAsync()
     {
         string accountNumber;

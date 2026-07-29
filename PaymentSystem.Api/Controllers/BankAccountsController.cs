@@ -51,4 +51,41 @@ public class BankAccountsController : ControllerBase
             });
         }
     }
+
+    [HttpPost("{bankAccountId:int}/deposit")]
+    public async Task<ActionResult<BankAccountResponseDto>> Deposit(
+    int bankAccountId,
+    DepositBankAccountDto request)
+    {
+        try
+        {
+            BankAccountResponseDto updatedBankAccount =
+                await _bankAccountService.DepositAsync(
+                    bankAccountId,
+                    request);
+
+            return Ok(updatedBankAccount);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+        catch (InvalidOperationException exception)
+        {
+            return Conflict(new
+            {
+                message = exception.Message
+            });
+        }
+        catch (ArgumentException exception)
+        {
+            return BadRequest(new
+            {
+                message = exception.Message
+            });
+        }
+    }
 }
