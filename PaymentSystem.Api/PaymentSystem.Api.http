@@ -6,6 +6,6 @@ Content-Type: application/json
 {
   "cardToken": "CARD-5F92D42A89B141A2ACD75F34C3E64F18",
   "merchantCode": "MER-20260729-8D3CFDFA",
-  "amountMinor": 100000,
+  "amountMinor": 450001,
   "currency": "TRY"
 }
