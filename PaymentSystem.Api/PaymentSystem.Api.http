@@ -1,10 +1,9 @@
 @PaymentSystem.Api_HostAddress = http://localhost:5277
 
-POST {{PaymentSystem.Api_HostAddress}}/api/cards
+POST {{PaymentSystem.Api_HostAddress}}/api/merchants
 Content-Type: application/json
 
 {
-  "bankAccountId": 1,
-  "cardBank": "VakýfBank",
-  "dailyLimitMinor": 500000
+  "merchantName": "Test Market",
+  "merchantCategoryCode": "5411"
 }

@@ -29,6 +29,9 @@ builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
+
+builder.Services.AddScoped<IMerchantService, MerchantService>();
+builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
 //
 
 var app = builder.Build();
