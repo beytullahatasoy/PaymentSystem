@@ -22,8 +22,13 @@ builder.Services.AddDbContext<PaymentDbContext>(veritabaiAyarlari =>
 });
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
-
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+
+builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<ICardRepository, CardRepository>();
 //
 
 var app = builder.Build();

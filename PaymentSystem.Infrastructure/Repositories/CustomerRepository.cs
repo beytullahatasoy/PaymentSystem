@@ -12,7 +12,15 @@ public class CustomerRepository : ICustomerRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<bool> EmailExistAsync(string email)
+
+    public async Task<Customer?> GetByIdAsync(int customerId)
+    {
+        return await _dbContext.Customers
+            .FirstOrDefaultAsync(customer => 
+            customer.CustomerId == customerId);
+    }
+
+    public async Task<bool> EmailExistsAsync(string email)
     {
         return await _dbContext.Customers.AnyAsync(customer => customer.Email == email);
     }
@@ -20,6 +28,7 @@ public class CustomerRepository : ICustomerRepository
     {
         await _dbContext.Customers.AddAsync(customer);
     }
+
     public async Task SaveChangesAsync()
     {
         await _dbContext.SaveChangesAsync();

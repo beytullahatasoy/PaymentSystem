@@ -10,7 +10,7 @@ public class Card
     public int ExpiryMonth { get; set; } 
     public int ExpiryYear { get; set; } 
     public long DailyLimitMinor { get; set; }
-    public string status { get; set; } = "Active";
+    public string Status { get; set; } = "Active";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public BankAccount BankAccount { get; set; } = null!;

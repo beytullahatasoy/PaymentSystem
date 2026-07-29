@@ -21,7 +21,7 @@ public class CustomerService : ICustomerService
             .ToLowerInvariant();
 
         bool emailExists = await _customerRepository
-            .EmailExistAsync(normalizedEmail);
+            .EmailExistsAsync(normalizedEmail);
 
         if (emailExists)
         {
