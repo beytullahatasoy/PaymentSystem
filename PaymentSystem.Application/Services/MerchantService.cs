@@ -72,4 +72,45 @@ public class MerchantService : IMerchantService
         } while (merchantCodeExists);
         return merchantCode;
     }
+
+    public async Task<List<MerchantResponseDto>>
+    GetAllMerchantsAsync()
+    {
+        List<Merchant> merchants =
+            await _merchantRepository.GetAllAsync();
+
+        return merchants
+            .Select(merchant => MapToResponse(merchant))
+            .ToList();
+    }
+
+    public async Task<MerchantResponseDto> GetMerchantByIdAsync(
+    int merchantId)
+    {
+        Merchant? merchant =
+            await _merchantRepository.GetByIdAsync(merchantId);
+
+        if (merchant is null)
+        {
+            throw new KeyNotFoundException(
+                "Şirket bulunamadı.");
+        }
+
+        return MapToResponse(merchant);
+    }
+
+    private static MerchantResponseDto MapToResponse(
+    Merchant merchant)
+    {
+        return new MerchantResponseDto
+        {
+            MerchantId = merchant.MerchantId,
+            MerchantCode = merchant.MerchantCode,
+            MerchantName = merchant.MerchantName,
+            MerchantCategoryCode =
+                merchant.MerchantCategoryCode,
+            IsActive = merchant.IsActive,
+            CreatedAt = merchant.CreatedAt
+        };
+    }
 }

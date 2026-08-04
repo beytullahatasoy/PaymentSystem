@@ -38,4 +38,20 @@ public class MerchantRepository : IMerchantRepository
     {
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<Merchant>> GetAllAsync()
+    {
+        return await _dbContext.Merchants
+            .AsNoTracking()
+            .OrderBy(merchant => merchant.MerchantId)
+            .ToListAsync();
+    }
+
+    public async Task<Merchant?> GetByIdAsync(int merchantId)
+    {
+        return await _dbContext.Merchants
+            .AsNoTracking()
+            .FirstOrDefaultAsync(
+                merchant => merchant.MerchantId == merchantId);
+    }
 }

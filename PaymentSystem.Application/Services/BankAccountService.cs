@@ -136,4 +136,52 @@ public class BankAccountService : IBankAccountService
 
         return accountNumber;
     }
+
+    public async Task<BankAccountResponseDto> GetBankAccountByIdAsync(
+    int bankAccountId)
+    {
+        BankAccount? bankAccount =
+            await _bankAccountRepository.GetByIdAsync(bankAccountId);
+
+        if (bankAccount is null)
+        {
+            throw new KeyNotFoundException("Banka hesabı bulunamadı.");
+        }
+
+        return MapToResponse(bankAccount);
+    }
+
+    public async Task<List<BankAccountResponseDto>>
+    GetBankAccountsByCustomerIdAsync(int customerId)
+    {
+        Customer? customer =
+            await _customerRepository.GetByIdAsync(customerId);
+
+        if (customer is null)
+        {
+            throw new KeyNotFoundException("Müşteri bulunamadı.");
+        }
+
+        List<BankAccount> bankAccounts =
+            await _bankAccountRepository.GetByCustomerIdAsync(customerId);
+
+        return bankAccounts
+            .Select(bankAccount => MapToResponse(bankAccount))
+            .ToList();
+    }
+
+    private static BankAccountResponseDto MapToResponse(
+    BankAccount bankAccount)
+    {
+        return new BankAccountResponseDto
+        {
+            BankAccountId = bankAccount.BankAccountId,
+            CustomerId = bankAccount.CustomerId,
+            AccountNumber = bankAccount.AccountNumber,
+            BalanceMinor = bankAccount.BalanceMinor,
+            Currency = bankAccount.Currency,
+            Status = bankAccount.Status,
+            CreatedAt = bankAccount.CreatedAt
+        };
+    }
 }

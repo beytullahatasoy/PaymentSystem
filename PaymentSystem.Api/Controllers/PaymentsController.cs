@@ -15,6 +15,38 @@ public class PaymentsController : ControllerBase
         _paymentService = paymentService;
     }
 
+    [HttpGet]
+    public async Task<
+    ActionResult<List<PaymentHistoryResponseDto>>>
+    GetAllPayments()
+    {
+        List<PaymentHistoryResponseDto> payments =
+            await _paymentService.GetAllPaymentsAsync();
+
+        return Ok(payments);
+    }
+
+    [HttpGet("{paymentTransactionId:int}")]
+    public async Task<ActionResult<PaymentHistoryResponseDto>>
+    GetPaymentById(int paymentTransactionId)
+    {
+        try
+        {
+            PaymentHistoryResponseDto payment =
+                await _paymentService.GetPaymentByIdAsync(
+                    paymentTransactionId);
+
+            return Ok(payment);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+    }
+
 
     [HttpPost]
     public async Task<ActionResult<PaymentResponseDto>> ProcessPayment(

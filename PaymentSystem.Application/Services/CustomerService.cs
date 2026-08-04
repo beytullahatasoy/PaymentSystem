@@ -51,4 +51,35 @@ public class CustomerService : ICustomerService
 
         return response;
     }
+
+    public async Task<List<CustomerResponseDto>> GetAllCustomersAsync()
+    {
+        List<Customer> customers = await _customerRepository.GetAllAsync();
+
+        return customers
+            .Select(customer => MapToResponse(customer))
+            .ToList();
+    }
+
+    public async Task<CustomerResponseDto> GetCustomerByIdAsync(int customerId)
+    {
+        Customer? customer = await _customerRepository.GetByIdAsync(customerId);
+        if (customer is null)
+        {
+            throw new KeyNotFoundException("Belirtilen ID'ye sahip bir müşteri bulunamadı.");
+        }
+        return MapToResponse(customer); 
+    }
+    private static CustomerResponseDto MapToResponse(Customer customer)
+    {
+        return new CustomerResponseDto
+        {
+            CustomerId = customer.CustomerId,
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
+            Email = customer.Email,
+            CreatedAt = customer.CreatedAt,
+            IsActive = customer.IsActive
+        };
+    }
 }

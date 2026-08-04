@@ -8,6 +8,19 @@ using PaymentSystem.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+const string ReactCorsPolicy = "ReactCorsPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: ReactCorsPolicy,policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -41,6 +54,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(ReactCorsPolicy);
 
 app.UseAuthorization();
 

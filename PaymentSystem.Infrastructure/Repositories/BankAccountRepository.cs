@@ -36,4 +36,14 @@ public class BankAccountRepository : IBankAccountRepository
     {
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<BankAccount>> GetByCustomerIdAsync(
+    int customerId)
+    {
+        return await _dbContext.BankAccounts
+            .AsNoTracking()
+            .Where(account => account.CustomerId == customerId)
+            .OrderBy(account => account.BankAccountId)
+            .ToListAsync();
+    }
 }

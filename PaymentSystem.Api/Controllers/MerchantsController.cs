@@ -16,6 +16,36 @@ public class MerchantsController : ControllerBase
         _merchantService = merchantService;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<List<MerchantResponseDto>>>
+    GetAllMerchants()
+    {
+        List<MerchantResponseDto> merchants =
+            await _merchantService.GetAllMerchantsAsync();
+
+        return Ok(merchants);
+    }
+
+    [HttpGet("{merchantId:int}")]
+    public async Task<ActionResult<MerchantResponseDto>>
+    GetMerchantById(int merchantId)
+    {
+        try
+        {
+            MerchantResponseDto merchant =
+                await _merchantService.GetMerchantByIdAsync(
+                    merchantId);
+
+            return Ok(merchant);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+    }
 
     [HttpPost]
     public async Task<ActionResult<MerchantResponseDto>> CreateMerchant(

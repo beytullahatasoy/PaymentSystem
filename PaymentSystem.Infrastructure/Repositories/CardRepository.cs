@@ -38,4 +38,14 @@ public class CardRepository : ICardRepository
     {
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<Card>> GetByBankAccountIdAsync(
+    int bankAccountId)
+    {
+        return await _dbContext.Cards
+            .AsNoTracking()
+            .Where(card => card.BankAccountId == bankAccountId)
+            .OrderBy(card => card.CardId)
+            .ToListAsync();
+    }
 }

@@ -115,4 +115,42 @@ public class CardService : ICardService
 
         return number.ToString("D4");
     }
+
+    public async Task<List<CardResponseDto>>
+    GetCardsByBankAccountIdAsync(int bankAccountId)
+    {
+        BankAccount? bankAccount =
+            await _bankAccountRepository.GetByIdAsync(bankAccountId);
+
+        if (bankAccount is null)
+        {
+            throw new KeyNotFoundException(
+                "Banka hesabı bulunamadı.");
+        }
+
+        List<Card> cards =
+            await _cardRepository.GetByBankAccountIdAsync(
+                bankAccountId);
+
+        return cards
+            .Select(card => MapToResponse(card))
+            .ToList();
+    }
+
+    private static CardResponseDto MapToResponse(Card card)
+    {
+        return new CardResponseDto
+        {
+            CardId = card.CardId,
+            BankAccountId = card.BankAccountId,
+            CardToken = card.CardToken,
+            CardBank = card.CardBank,
+            LastFourDigits = card.LastFourDigits,
+            ExpiryMonth = card.ExpiryMonth,
+            ExpiryYear = card.ExpiryYear,
+            DailyLimitMinor = card.DailyLimitMinor,
+            Status = card.Status,
+            CreatedAt = card.CreatedAt
+        };
+    }
 }

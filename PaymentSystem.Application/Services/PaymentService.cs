@@ -273,4 +273,55 @@ public class PaymentService : IPaymentService
             CreatedAt = paymentTransaction.CreatedAt
         };
     }
+
+    public async Task<List<PaymentHistoryResponseDto>>
+    GetAllPaymentsAsync()
+    {
+        List<PaymentTransaction> paymentTransactions =
+            await _paymentTransactionRepository.GetAllAsync();
+
+        return paymentTransactions
+            .Select(paymentTransaction =>
+                MapToHistoryResponse(paymentTransaction))
+            .ToList();
+    }
+
+    public async Task<PaymentHistoryResponseDto>
+    GetPaymentByIdAsync(int paymentTransactionId)
+    {
+        PaymentTransaction? paymentTransaction =
+            await _paymentTransactionRepository.GetByIdAsync(
+                paymentTransactionId);
+
+        if (paymentTransaction is null)
+        {
+            throw new KeyNotFoundException(
+                "Ödeme işlemi bulunamadı.");
+        }
+
+        return MapToHistoryResponse(paymentTransaction);
+    }
+
+    private static PaymentHistoryResponseDto
+    MapToHistoryResponse(
+        PaymentTransaction paymentTransaction)
+    {
+        return new PaymentHistoryResponseDto
+        {
+            PaymentTransactionId = paymentTransaction.PaymentTransactionId,
+            TransactionReference = paymentTransaction.TransactionReference,
+            CardId = paymentTransaction.CardId,
+            CardBank = paymentTransaction.Card.CardBank,
+            LastFourDigits = paymentTransaction.Card.LastFourDigits,
+            MerchantId = paymentTransaction.MerchantId,
+            MerchantCode = paymentTransaction.Merchant.MerchantCode,
+            MerchantName = paymentTransaction.Merchant.MerchantName,
+            AmountMinor = paymentTransaction.AmountMinor,
+            Currency = paymentTransaction.Currency, 
+            Status = paymentTransaction.Status,
+            ResponseCode = paymentTransaction.ResponseCode,
+            Description = paymentTransaction.Description,
+            CreatedAt = paymentTransaction.CreatedAt
+        };
+    }
 }

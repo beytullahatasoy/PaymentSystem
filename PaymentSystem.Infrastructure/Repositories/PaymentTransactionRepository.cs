@@ -55,4 +55,31 @@ public class PaymentTransactionRepository
     {
         await _dbContext.SaveChangesAsync();
     }
+
+
+    public async Task<List<PaymentTransaction>> GetAllAsync()
+    {
+        return await _dbContext.PaymentTransactions
+            .AsNoTracking()
+            .Include(paymentTransaction =>
+                paymentTransaction.Card)
+            .Include(paymentTransaction =>
+                paymentTransaction.Merchant)
+            .OrderByDescending(paymentTransaction =>
+                paymentTransaction.CreatedAt)
+            .ToListAsync();
+    }
+    public async Task<PaymentTransaction?> GetByIdAsync(
+    int paymentTransactionId)
+    {
+        return await _dbContext.PaymentTransactions
+            .AsNoTracking()
+            .Include(paymentTransaction =>
+                paymentTransaction.Card)
+            .Include(paymentTransaction =>
+                paymentTransaction.Merchant)
+            .FirstOrDefaultAsync(paymentTransaction =>
+                paymentTransaction.PaymentTransactionId ==
+                paymentTransactionId);
+    }
 }

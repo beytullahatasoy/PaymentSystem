@@ -33,4 +33,12 @@ public class CustomerRepository : ICustomerRepository
     {
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<Customer>> GetAllAsync()
+    {
+        return await _dbContext.Customers
+            .AsNoTracking()
+            .OrderBy(customer => customer.CustomerId)
+            .ToListAsync();
+    }
 }

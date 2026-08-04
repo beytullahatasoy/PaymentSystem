@@ -14,6 +14,28 @@ public class CustomerController : ControllerBase
         _customerService = customerService;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<List<CustomerResponseDto>>> GetAllCustomers()
+    {
+        List<CustomerResponseDto> customers = await _customerService.GetAllCustomersAsync();
+        return Ok(customers);
+    }
+
+    [HttpGet("{customerId:int}")]
+    public async Task<ActionResult<CustomerResponseDto>> GetCustomerById(
+        int customerId)
+    {
+        try 
+        {
+            CustomerResponseDto customer = await _customerService.GetCustomerByIdAsync(customerId);
+            return Ok(customer);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new { message = exception.Message });
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<CustomerResponseDto>> CreateCustomer(CreateCustomerDto request)
     {

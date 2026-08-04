@@ -4,6 +4,10 @@ namespace PaymentSystem.Application.Interfaces.Repositories;
 
 public interface IPaymentTransactionRepository
 {
+    Task<List<PaymentTransaction>> GetAllAsync();
+    Task<PaymentTransaction?> GetByIdAsync(
+        int paymentTransactionId);
+
     Task<bool> TransactionReferenceExistsAsync(
         string transactionReference);
 

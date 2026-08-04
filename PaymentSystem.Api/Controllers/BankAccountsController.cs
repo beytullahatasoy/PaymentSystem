@@ -15,6 +15,46 @@ public class BankAccountsController : ControllerBase
         _bankAccountService = bankAccountService;
     }
 
+    [HttpGet("{bankAccountId:int}")]
+    public async Task<ActionResult<BankAccountResponseDto>> GetBankAccountById(
+        int bankAccountId)
+    {
+        try
+        {
+            BankAccountResponseDto bankAccount =
+                await _bankAccountService.GetBankAccountByIdAsync(bankAccountId);
+            return Ok(bankAccount);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+    }
+
+    [HttpGet("by-customer/{customerId:int}")]
+    public async Task<ActionResult<List<BankAccountResponseDto>>>
+    GetBankAccountsByCustomerId(int customerId)
+    {
+        try
+        {
+            List<BankAccountResponseDto> bankAccounts =
+                await _bankAccountService
+                    .GetBankAccountsByCustomerIdAsync(customerId);
+
+            return Ok(bankAccounts);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<BankAccountResponseDto>>
         CreateBankAccount(CreateBankAccountDto request)
@@ -52,6 +92,7 @@ public class BankAccountsController : ControllerBase
         }
     }
 
+    
     [HttpPost("{bankAccountId:int}/deposit")]
     public async Task<ActionResult<BankAccountResponseDto>> Deposit(
     int bankAccountId,

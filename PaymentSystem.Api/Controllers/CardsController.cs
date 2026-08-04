@@ -15,6 +15,27 @@ public class CardsController : ControllerBase
         _cardService = cardService;
     }
 
+    [HttpGet("by-bank-account/{bankAccountId:int}")]
+    public async Task<ActionResult<List<CardResponseDto>>>
+    GetCardsByBankAccountId(int bankAccountId)
+    {
+        try
+        {
+            List<CardResponseDto> cards =
+                await _cardService
+                    .GetCardsByBankAccountIdAsync(bankAccountId);
+
+            return Ok(cards);
+        }
+        catch (KeyNotFoundException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<CardResponseDto>> CreateCard(
         CreateCardDto request)
