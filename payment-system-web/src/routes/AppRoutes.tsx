@@ -4,6 +4,7 @@ import {
     Routes,
 } from 'react-router';
 
+import AppLayout from '../layouts/AppLayout';
 import BankAccountDetailPage from '../pages/BankAccountDetailPage';
 import CustomerDetailPage from '../pages/CustomerDetailPage';
 import CustomersPage from '../pages/CustomersPage';
@@ -16,50 +17,52 @@ import TransactionsPage from '../pages/TransactionsPage';
 function AppRoutes() {
     return (
         <Routes>
-            <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
-            />
+            <Route element={<AppLayout />}>
+                <Route
+                    path="/"
+                    element={<Navigate to="/dashboard" replace />}
+                />
 
-            <Route
-                path="/dashboard"
-                element={<DashboardPage />}
-            />
+                <Route
+                    path="/dashboard"
+                    element={<DashboardPage />}
+                />
 
-            <Route
-                path="/customers"
-                element={<CustomersPage />}
-            />
+                <Route
+                    path="/customers"
+                    element={<CustomersPage />}
+                />
 
-            <Route
-                path="/customers/:customerId"
-                element={<CustomerDetailPage />}
-            />
+                <Route
+                    path="/customers/:customerId"
+                    element={<CustomerDetailPage />}
+                />
 
-            <Route
-                path="/bank-accounts/:bankAccountId"
-                element={<BankAccountDetailPage />}
-            />
+                <Route
+                    path="/bank-accounts/:bankAccountId"
+                    element={<BankAccountDetailPage />}
+                />
 
-            <Route
-                path="/merchants"
-                element={<MerchantsPage />}
-            />
+                <Route
+                    path="/merchants"
+                    element={<MerchantsPage />}
+                />
 
-            <Route
-                path="/payments/new"
-                element={<NewPaymentPage />}
-            />
+                <Route
+                    path="/payments/new"
+                    element={<NewPaymentPage />}
+                />
 
-            <Route
-                path="/transactions"
-                element={<TransactionsPage />}
-            />
+                <Route
+                    path="/transactions"
+                    element={<TransactionsPage />}
+                />
 
-            <Route
-                path="*"
-                element={<NotFoundPage />}
-            />
+                <Route
+                    path="*"
+                    element={<NotFoundPage />}
+                />
+            </Route>
         </Routes>
     );
 }
